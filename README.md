@@ -55,7 +55,7 @@ In order to properly analyze the dataset, we did the following to clean our data
 3. Map the average rating per recipe to raw_recipes
     * Instead of fully merging the datasets, we extract only the information we care about (the average rating) and add it directly to the main recipes dataset.
     * This keeps all unique recipes in ```raw_recipes``` and avoids duplicate rows that would result from merging on one-to-many relationships.
-    * If a recipe has no ratings in the interactions dataset (never rated or all ratings were 0), its mapped average will be ```np.nan``` — accurately reflecting the absence of rating data.
+    * If a recipe has no ratings in the interactions dataset (never rated or all ratings were 0), its mapped average will be ```np.nan```, reflecting the absence of rating data.
 
 4. Add new column ```'high_rating'``` to the dataframe.
     * ```'high_rating'``` is a binary column indicating whether a recipe has an average rating of 4.5 or higher. Recipes that meet this threshold are assigned a 1, while all others receive a 0. This separates the dataset into two groups: highly rated recipes and the rest. It allows for easy comparison of characteristics (e.g., time, ingredients, sugar content) between top-rated recipes and lower-rated ones, helping identify what makes a recipe particularly successful.
@@ -102,6 +102,8 @@ Below is the distribution of cook times in minutes less than or equal to 250 min
     height="800"
     frameborder="0"
 ></iframe>
+<br>Write some description
+
 
 As we can see in the histogram above, our cooking times show a right-skewed distribution, which suggests logarithmic transformation of our minutes column could help reduce skewness and improve symmetry for better analysis:
 <iframe 
@@ -110,6 +112,8 @@ As we can see in the histogram above, our cooking times show a right-skewed dist
     height="800"
     frameborder="0"
 ></iframe>
+<br>Write some description
+
 
 Next we wanted to look at the distribution of average recipe ratings:
 <iframe 
@@ -118,6 +122,8 @@ Next we wanted to look at the distribution of average recipe ratings:
     height="800"
     frameborder="0"
 ></iframe>
+<br>Write some description
+
 
 #### Bivariate Analysis
 
@@ -128,6 +134,8 @@ Here we want to examine cooking time split into bins against average recipe rati
     height="800"
     frameborder="0"
 ></iframe>
+<br>Write some description
+
 
 Above we see a faint trend that ratings decrease through each time bin. In order to confirm this we want to see the mean rating for each time bin:<br>
 | time_bin   |   avg_recipe_rating |
@@ -137,6 +145,8 @@ Above we see a faint trend that ratings decrease through each time bin. In order
 | 30-60 min  |             4.61215 |
 | 60-120 min |             4.6205  |
 | 120+ min   |             4.59511 |
+<br>Write some description
+
 
 There's not a significant trend and the ```'60-120 min'``` bin goes against this trend as it's mean average recipe rating is greater than the bin before it. This made us curious about the distribution of recipe counts per time bin so we visualized that below:
 
@@ -146,6 +156,8 @@ There's not a significant trend and the ```'60-120 min'``` bin goes against this
     height="800"
     frameborder="0"
 ></iframe>
+<br>Write some description
+
 
 Next we want to see the relationship between filtered cooking time (times <= 250) and average recipe rating:
 <iframe 
@@ -154,6 +166,8 @@ Next we want to see the relationship between filtered cooking time (times <= 250
     height="800"
     frameborder="0"
 ></iframe>
+<br>Write some description
+
 
 We also want to see the relationship between log cooking time and average recipe rating:
 <iframe 
@@ -162,23 +176,79 @@ We also want to see the relationship between log cooking time and average recipe
     height="800"
     frameborder="0"
 ></iframe>
+<br>Write some description
+
 
 Finally, we want to see what the mean average recipe rating looks like for quick and non-quick recipes:<br>
 |   is_quick |    mean |   count |
 |-----------:|--------:|--------:|
 |          0 | 4.60937 |   44108 |
 |          1 | 4.64439 |   37065 |
+<br>Write some description
 
 ## Assessment of Missingness
 
-In our dataset, we have three columns with missing data: ```'date'```, ```'rating'```, and ```'review'```. These columns have a considerable amount of missing values, so we must assess the missingness of the dataset.
+### NMAR Analysis
+
+We believe that the missingness in the `'description'` column is Not Missing At Random (NMAR). This is because the likelihood of a description being provided likely depends on unobserved factors, such as the contributor’s effort, writing motivation, or belief in the recipe’s uniqueness or quality. For example, users who are less engaged or upload recipes casually may be less inclined to add a description, while highly engaged users may write detailed descriptions to showcase or explain their creations.
+
+To convert this from NMAR to Missing At Random (MAR), we would need access to additional variables, such as contributor behavior or user profile information (e.g., how many recipes the user has uploaded, average engagement with their recipes, or whether they are verified contributors). These variables might explain the missingness in `'description'`, helping us determine if the absence of a description is related to something observable rather than unobservable.
+
+### Missingness Dependency
+
+To explore whether the missingness of `'description'` might be dependent on other observable columns, we conducted permutation tests with the following variables: `'minutes'`, `'avg_recipe_rating'`, and `'few_ingredients'`.
+
+### Minutes and Description
+Null Hypothesis: The missingness of 'description' does not depend on the cooking time of the recipe ('minutes').
+
+Alternative Hypothesis: The missingness of 'description' does depend on the cooking time of the recipe.
+
+Test Statistic: The absolute difference in the mean number of minutes between recipes with and without a description.
+
+Significance Level: 0.05
+
+After running a permutation test with 1000 shuffles, we obtained a p-value of 1.0, which is much greater than 0.05.
+
+Conclusion: We fail to reject the null hypothesis. The missingness of 'description' does not depend on the cooking time in minutes.
+<br>Add plot 
+
+### Average Rating and Description
+Null Hypothesis: The missingness of 'description' does not depend on the average rating of a recipe ('avg_recipe_rating').
+
+Alternative Hypothesis: The missingness of 'description' does depend on the average rating of a recipe.
+
+Test Statistic: The absolute difference in the mean average rating between recipes with and without a description.
+
+Significance Level: 0.05
+
+From the permutation test, we obtained a p-value of 0.45, which is greater than the significance level.
+Conclusion: We fail to reject the null hypothesis. The missingness of 'description' does not depend on a recipe's average rating.
+<br>Add plot 
+
+
+### Number of Ingredients and Description
+Null Hypothesis: The missingness of 'description' does not depend on the number of ingredients in the recipe.
+
+Alternative Hypothesis: The missingness of 'description' does depend on the number of ingredients in the recipe.
+
+Test Statistic: The absolute difference in the proportion of missing descriptions between recipes with fewer ingredients and those with more.
+
+Significance Level: 0.05
+
+We created a binary column 'few_ingredients' to indicate whether a recipe has fewer than or equal to the median number of ingredients.
+
+The permutation test produced a p-value of 0.011, which is less than the significance level.
+Conclusion: We reject the null hypothesis. The missingness of 'description' does depend on the number of ingredients in the recipe. Recipes with fewer ingredients are more likely to have missing descriptions, possibly because they are simpler and don’t require much explanation.
+<br>Add plot 
 
 
 ## Hypothesis Testing
+look at checkpoint feedback and then complete after
 
 
 ## Framing a Prediction Problem
-
+We aim to predict whether a user will enjoy a recipe based on its features through binary classification. This is because our response variable is a binary column called `'enjoy'`, which is 1 if a recipe’s average rating is greater than or equal to the median rating across all recipes, and 0 otherwise. This choice allows us to frame the prediction task as identifying “liked” vs. “not liked” recipes using user-provided ratings. This makes the task a binary classification problem with the model’s job being to assign a new recipe to one of two categories: liked or not liked. We use only information that would be available at the time of recipe publication to simulate a real-world use case such as suggesting new recipes to users. 
+<br>I need to explain metrics and justify
 
 ## Baseline Model
 
