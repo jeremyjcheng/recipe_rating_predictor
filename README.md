@@ -1,7 +1,7 @@
 # Cooking Time vs. Recipe Ratings. A Data-Driven analysis on Recipes
 
 Final Project for the University of California, San Diego DSC80 Course
-<br>by: Jeremy Cheng and Cedric Jeng
+by: Jeremy Cheng and Cedric Jeng
 
 ## Overview
 
@@ -26,7 +26,6 @@ As college students living on campus, finding good food is much harder than it s
 | `'description'` | recipe description from user |
 | `'ingredients'` | recipe ingredients |
 | `'n_ingredients'` | number of ingredients in recipe |
-<br>
 
 `'interactions'`, our second dataset, consist of 731927 rows (731927 unique reviews) and 5 columns, each representing information on the review:<br>
 | Column | Description |
