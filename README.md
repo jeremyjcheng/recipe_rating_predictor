@@ -15,29 +15,29 @@ As college students living on campus, finding good food is much harder than it s
 ```'recipe'```, the first dataset, consist of 83782 rows (83782 unique recipes) and 12 columns, each representing information on the recipe:<br>
 | Column                | Description |
 |:----------------------|------------:|
-| ```'name'```          | recipe name |
-| ```'id'```            | recipe ID |
-| ```'minutes'```       | minutes to cook recipe |
-| ```'contributor_id'```| user ID of who submitted recipe |
-| ```'submitted'```     | date recipe was submitted |
-| ```'tags'```          | food.com tags |
-| ```'nutrition'```     | nutrition information formatted as: \[calores (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)\]; PDV means “percentage of daily value” |
-| ```'n_steps'```       | number of steps in recipe|
-| ```'steps'```         | text for in order recipe steps |
-| ```'description'```   | recipe description from user |
-| ```'ingredients'```   | recipe ingredients |
-| ```'n_ingredients'``` | number of ingredients in recipe |
+| `'name'`              | recipe name |
+| `'id'`                | recipe ID |
+| `'minutes'`           | minutes to cook recipe |
+| `'contributor_id'`    | user ID of who submitted recipe |
+| `'submitted'`         | date recipe was submitted |
+| `'tags'`              | food.com tags |
+| `'nutrition'`         | `[calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]`; PDV means "percentage of daily value" |
+| `'n_steps'`           | number of steps in recipe |
+| `'steps'`             | text for in order recipe steps |
+| `'description'`       | recipe description from user |
+| `'ingredients'`       | recipe ingredients |
+| `'n_ingredients'`     | number of ingredients in recipe |
+<br>
 
 
-
-```'interactions'```, our second dataset, consist of 731927 rows (731927 unique reviews) and 5 columns, each representing information on the review:
-| Column           | Description               |
-|:-----------------|--------------------------:|
-| ```'user_id'```  | user ID of reviewer       |
-| ```'recipe_id'```| ID of recipe              |
-| ```'date'```     | date review was submitted |
-| ```'rating'```   | rating of recipe          |
-| ```'review'```   | text of the review        |
+```'interactions'```, our second dataset, consist of 731927 rows (731927 unique reviews) and 5 columns, each representing information on the review:<br>
+| Column       | Description               |
+|:-------------|--------------------------:|
+| `'user_id'`  | user ID of reviewer       |
+| `'recipe_id'`| ID of recipe              |
+| `'date'`     | date review was submitted |
+| `'rating'`   | rating of recipe          |
+| `'review'`   | text of the review        |
 
 
 ## Data Cleaning and Exploratory Data Analysis
@@ -61,27 +61,27 @@ In order to properly analyze the dataset, we did the following to clean our data
     * ```'high_rating'``` is a binary column indicating whether a recipe has an average rating of 4.5 or higher. Recipes that meet this threshold are assigned a 1, while all others receive a 0. This separates the dataset into two groups: highly rated recipes and the rest. It allows for easy comparison of characteristics (e.g., time, ingredients, sugar content) between top-rated recipes and lower-rated ones, helping identify what makes a recipe particularly successful.
 
 #### Result
-These are the columns of our cleaned dataframe:
-| Column                   | type |
-|:-------------------------|--------:|
-| ```'name'```             | object |
-| ```'id'```               | int64 |
-| ```'minutes'```          | int64 |
-| ```'contributor_id'```   | int64 |
-| ```'submitted'```        | object |
-| ```'tags'```             | object |
-| ```'nutrition'```        | object |
-| ```'n_steps'```          | int64 |
-| ```'steps'```            | object |
-| ```'description'```      | object |
-| ```'ingredients'```      | object |
-| ```'n_ingredients'```    | int64 |
-| ```'avg_recipe_rating'```| float64 |
-| ```'high_rating'```      | int64 |
+These are the columns of our cleaned dataframe:<br>
+| Column                | Type     |
+|:----------------------|---------:|
+| `'name'`              | object   |
+| `'id'`                | int64    |
+| `'minutes'`          | int64    |
+| `'contributor_id'`   | int64    |
+| `'submitted'`        | object   |
+| `'tags'`             | object   |
+| `'nutrition'`        | object   |
+| `'n_steps'`          | int64    |
+| `'steps'`            | object   |
+| `'description'`      | object   |
+| `'ingredients'`      | object   |
+| `'n_ingredients'`    | int64    |
+| `'avg_recipe_rating'`| float64  |
+| `'high_rating'`      | int64    |
 
-And below is the head of our dataframe with only columns needed for our project:
-| | name | id | minutes | tags  | nutrition | n_steps |   n_ingredients | avg_recipe_rating | high_rating |
-|---:|:---|---:|---:|:---|:---|---:|---:|---:|---:|
+And below is the head of our dataframe with only columns needed for our project:<br>
+|    | name                                 |     id |   minutes | tags                                                                                                                                                                                                                                                                                               | nutrition                                     |   n_steps |   n_ingredients |   avg_recipe_rating |   high_rating |
+|---:|:-------------------------------------|-------:|----------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------|----------:|----------------:|--------------------:|--------------:|
 |  0 | 1 brownies in the world    best ever | 333281 |        40 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings']                                                                        | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]      |        10 |               9 |                   4 |             0 |
 |  1 | 1 in canada chocolate chip cookies   | 453467 |        45 | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']                                                                                                                                      | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0]  |        12 |              11 |                   5 |             1 |
 |  2 | 412 broccoli casserole               | 306168 |        40 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                                                                                               | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]     |         6 |               9 |                   5 |             1 |
@@ -98,24 +98,24 @@ We first did univariate analysis to see the distribution of our single variables
 Below is the distribution of cook times in minutes less than or equal to 250 minutes. Initally we plotted our entire minutes column but because of extreme outliers, it showed one large column. Thus we filtered it to ```'<= 250'``` minutes to see our trends better:
 <iframe 
     src="graphs/fig_1.html" 
-    width="800"
-    height="600"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
 As we can see in the histogram above, our cooking times show a right-skewed distribution, which suggests logarithmic transformation of our minutes column could help reduce skewness and improve symmetry for better analysis:
 <iframe 
     src="graphs/fig_2.html" 
-    width="800"
-    height="600"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
 Next we wanted to look at the distribution of average recipe ratings:
 <iframe 
     src="graphs/fig_3.html" 
-    width="800"
-    height="600"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
@@ -124,12 +124,12 @@ Next we wanted to look at the distribution of average recipe ratings:
 Here we want to examine cooking time split into bins against average recipe rating:
 <iframe 
     src="graphs/fig_4.html" 
-    width="800"
-    height="600"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
-Above we see a faint trend that ratings decrease through each time bin. In order to confirm this we want to see the mean rating for each time bin:
+Above we see a faint trend that ratings decrease through each time bin. In order to confirm this we want to see the mean rating for each time bin:<br>
 | time_bin   |   avg_recipe_rating |
 |:-----------|--------------------:|
 | 0-10 min   |             4.68662 |
@@ -142,28 +142,28 @@ There's not a significant trend and the ```'60-120 min'``` bin goes against this
 
 <iframe 
     src="graphs/fig_7.html" 
-    width="800"
-    height="600"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
 Next we want to see the relationship between filtered cooking time (times <= 250) and average recipe rating:
 <iframe 
     src="graphs/fig_5.html" 
-    width="800"
-    height="600"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
 We also want to see the relationship between log cooking time and average recipe rating:
 <iframe 
     src="graphs/fig_6.html" 
-    width="800"
-    height="600"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
-Finally, we want to see what the mean average recipe rating looks like for quick and non-quick recipes:
+Finally, we want to see what the mean average recipe rating looks like for quick and non-quick recipes:<br>
 |   is_quick |    mean |   count |
 |-----------:|--------:|--------:|
 |          0 | 4.60937 |   44108 |
