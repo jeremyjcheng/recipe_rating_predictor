@@ -65,32 +65,34 @@ In order to properly analyze the dataset, we did the following to clean our data
 
 #### Result
 
-These are the columns of our cleaned dataframe:<br>
-| Column | Type |
-|:----------------------|---------:|
-| `'name'` | object |
-| `'id'` | int64 |
-| `'minutes'` | int64 |
-| `'contributor_id'` | int64 |
-| `'submitted'` | object |
-| `'tags'` | object |
-| `'nutrition'` | object |
-| `'n_steps'` | int64 |
-| `'steps'` | object |
-| `'description'` | object |
-| `'ingredients'` | object |
-| `'n_ingredients'` | int64 |
-| `'avg_recipe_rating'`| float64 |
-| `'high_rating'` | int64 |
+These are the columns of our cleaned dataframe:
 
-And below is the head of our dataframe with only columns needed for our project:<br>
-| | name | id | minutes | tags | nutrition | n_steps | n_ingredients | avg_recipe_rating | high_rating |
-|---:|:-------------------------------------|-------:|----------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------|----------:|----------------:|--------------------:|--------------:|
-| 0 | 1 brownies in the world best ever | 333281 | 40 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings'] | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0] | 10 | 9 | 4 | 0 |
-| 1 | 1 in canada chocolate chip cookies | 453467 | 45 | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings'] | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0] | 12 | 11 | 5 | 1 |
-| 2 | 412 broccoli casserole | 306168 | 40 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli'] | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0] | 6 | 9 | 5 | 1 |
-| 3 | millionaire pound cake | 286009 | 120 | ['time-to-make', 'course', 'cuisine', 'preparation', 'occasion', 'north-american', 'desserts', 'american', 'southern-united-states', 'dinner-party', 'holiday-event', 'cakes', 'dietary', 'christmas', 'thanksgiving', 'low-sodium', 'low-in-something', 'taste-mood', 'sweet', '4-hours-or-less'] | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0] | 7 | 7 | 5 | 1 |
-| 4 | 2000 meatloaf | 475785 | 90 | ['time-to-make', 'course', 'main-ingredient', 'preparation', 'main-dish', 'potatoes', 'vegetables', '4-hours-or-less', 'meatloaf', 'simply-potatoes2'] | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0] | 17 | 13 | 5 | 1 |
+| Column                |    Type |
+| :-------------------- | ------: |
+| `'name'`              |  object |
+| `'id'`                |   int64 |
+| `'minutes'`           |   int64 |
+| `'contributor_id'`    |   int64 |
+| `'submitted'`         |  object |
+| `'tags'`              |  object |
+| `'nutrition'`         |  object |
+| `'n_steps'`           |   int64 |
+| `'steps'`             |  object |
+| `'description'`       |  object |
+| `'ingredients'`       |  object |
+| `'n_ingredients'`     |   int64 |
+| `'avg_recipe_rating'` | float64 |
+| `'high_rating'`       |   int64 |
+
+And below is the head of our dataframe with only columns needed for our project:
+
+|     | name                               |     id | minutes | tags                                                                                                                                                                                                                                                                                               | nutrition                                     | n_steps | n_ingredients | avg_recipe_rating | high_rating |
+| --: | :--------------------------------- | -----: | ------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------- | ------: | ------------: | ----------------: | ----------: |
+|   0 | 1 brownies in the world best ever  | 333281 |      40 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings']                                                                        | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]      |      10 |             9 |                 4 |           0 |
+|   1 | 1 in canada chocolate chip cookies | 453467 |      45 | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']                                                                                                                                      | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0]  |      12 |            11 |                 5 |           1 |
+|   2 | 412 broccoli casserole             | 306168 |      40 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                                                                                               | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]     |       6 |             9 |                 5 |           1 |
+|   3 | millionaire pound cake             | 286009 |     120 | ['time-to-make', 'course', 'cuisine', 'preparation', 'occasion', 'north-american', 'desserts', 'american', 'southern-united-states', 'dinner-party', 'holiday-event', 'cakes', 'dietary', 'christmas', 'thanksgiving', 'low-sodium', 'low-in-something', 'taste-mood', 'sweet', '4-hours-or-less'] | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0] |       7 |             7 |                 5 |           1 |
+|   4 | 2000 meatloaf                      | 475785 |      90 | ['time-to-make', 'course', 'main-ingredient', 'preparation', 'main-dish', 'potatoes', 'vegetables', '4-hours-or-less', 'meatloaf', 'simply-potatoes2']                                                                                                                                             | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0]    |      17 |            13 |                 5 |           1 |
 
 Our cleaned dataframe consist of 83782 rows × 9 columns.
 
@@ -140,17 +142,19 @@ Here we want to examine cooking time split into bins against average recipe rati
     height="800"
     frameborder="0"
 ></iframe>
-<br>Write some description
+Write some description
 
-Above we see a faint trend that ratings decrease through each time bin. In order to confirm this we want to see the mean rating for each time bin:<br>
-| time_bin | avg_recipe_rating |
-|:-----------|--------------------:|
-| 0-10 min | 4.68662 |
-| 10-30 min | 4.63837 |
-| 30-60 min | 4.61215 |
-| 60-120 min | 4.6205 |
-| 120+ min | 4.59511 |
-<br>Write some description
+Above we see a faint trend that ratings decrease through each time bin. In order to confirm this we want to see the mean rating for each time bin:
+
+| time_bin   | avg_recipe_rating |
+| :--------- | ----------------: |
+| 0-10 min   |           4.68662 |
+| 10-30 min  |           4.63837 |
+| 30-60 min  |           4.61215 |
+| 60-120 min |            4.6205 |
+| 120+ min   |           4.59511 |
+
+Write some description
 
 There's not a significant trend and the `'60-120 min'` bin goes against this trend as it's mean average recipe rating is greater than the bin before it. This made us curious about the distribution of recipe counts per time bin so we visualized that below:
 
@@ -182,12 +186,14 @@ We also want to see the relationship between log cooking time and average recipe
 ></iframe>
 <br>Write some description
 
-Finally, we want to see what the mean average recipe rating looks like for quick and non-quick recipes:<br>
-| is_quick | mean | count |
-|-----------:|--------:|--------:|
-| 0 | 4.60937 | 44108 |
-| 1 | 4.64439 | 37065 |
-<br>Write some description
+Finally, we want to see what the mean average recipe rating looks like for quick and non-quick recipes:
+
+| is_quick |    mean | count |
+| -------: | ------: | ----: |
+|        0 | 4.60937 | 44108 |
+|        1 | 4.64439 | 37065 |
+
+Write some description
 
 ## Assessment of Missingness
 
