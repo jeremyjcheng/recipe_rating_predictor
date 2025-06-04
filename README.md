@@ -14,7 +14,7 @@ As college students living on campus, finding good food is much harder than it s
 
 ```'recipe'```, the first dataset, consist of 83782 rows (83782 unique recipes) and 12 columns, each representing information on the recipe:<br>
 | Column                | Description |
-|-----------------------|-------------|
+|:----------------------|------------:|
 | `'name'`              | recipe name |
 | `'id'`                | recipe ID |
 | `'minutes'`           | minutes to cook recipe |
