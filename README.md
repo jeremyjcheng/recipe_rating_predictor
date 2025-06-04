@@ -12,9 +12,9 @@ Our data science project explores the relationship between the cooking time and 
 ## Introduction
 As college students living on campus, finding good food is much harder than it seems. Dining hall meals often fall short, and in the fast-paced quarter system, it can be difficult to find the time to cook. Thus, we find ourself drawn to recipes that are both quick and satisfying. This is why we were excited to explore this dataset: to determine whether shorter cooking times are linked to higher recipe ratings. To do so, we are analyzing two datasets that contain recipes and their ratings from on [food.com](https://www.food.com/) since 2008. Through this project, we hope to better understand or even answer the question: Is cooking time a strong predictor of user satisfaction, as measured by average recipe ratings?
 
-```'recipe'```, the first dataset, consist of 83782 rows (83782 unique recipes) and 12 columns, each representing information on the recipe:
-| Column                   | Description |
-|:-------------------------|------------:|
+```'recipe'```, the first dataset, consist of 83782 rows (83782 unique recipes) and 12 columns, each representing information on the recipe:<br>
+| Column                | Description |
+|:----------------------|------------:|
 | ```'name'```          | recipe name |
 | ```'id'```            | recipe ID |
 | ```'minutes'```       | minutes to cook recipe |
@@ -31,13 +31,13 @@ As college students living on campus, finding good food is much harder than it s
 
 
 ```'interactions'```, our second dataset, consist of 731927 rows (731927 unique reviews) and 5 columns, each representing information on the review:
-| Column                   | Description |
-|:-------------------------|------------:|
-| ```'user_id'```  | user ID of reviewer |
-| ```'recipe_id'```| ID of recipe |
+| Column           | Description               |
+|:-----------------|--------------------------:|
+| ```'user_id'```  | user ID of reviewer       |
+| ```'recipe_id'```| ID of recipe              |
 | ```'date'```     | date review was submitted |
-| ```'rating'```   | rating of recipe |
-| ```'review'```   | text of the review |
+| ```'rating'```   | rating of recipe          |
+| ```'review'```   | text of the review        |
 
 
 ## Data Cleaning and Exploratory Data Analysis
@@ -96,18 +96,38 @@ Our cleaned dataframe consist of 83782 rows × 9 columns.
 We first did univariate analysis to see the distribution of our single variables.
 
 Below is the distribution of cook times in minutes less than or equal to 250 minutes. Initally we plotted our entire minutes column but because of extreme outliers, it showed one large column. Thus we filtered it to ```'<= 250'``` minutes to see our trends better:
-<iframe src="fig_1.html" width="100%" height="500px"></iframe>
+<iframe 
+    src="graphs/fig_1.html" 
+    width="800"
+    height="600"
+    frameborder="0"
+></iframe>
 
 As we can see in the histogram above, our cooking times show a right-skewed distribution, which suggests logarithmic transformation of our minutes column could help reduce skewness and improve symmetry for better analysis:
-<iframe src="fig_2.html" width="100%" height="500px"></iframe>
+<iframe 
+    src="graphs/fig_2.html" 
+    width="800"
+    height="600"
+    frameborder="0"
+></iframe>
 
 Next we wanted to look at the distribution of average recipe ratings:
-<iframe src="fig_3.html" width="100%" height="500px"></iframe>
+<iframe 
+    src="graphs/fig_3.html" 
+    width="800"
+    height="600"
+    frameborder="0"
+></iframe>
 
 #### Bivariate Analysis
 
 Here we want to examine cooking time split into bins against average recipe rating:
-<iframe src="fig_4.html" width="100%" height="500px"></iframe>
+<iframe 
+    src="graphs/fig_4.html" 
+    width="800"
+    height="600"
+    frameborder="0"
+></iframe>
 
 Above we see a faint trend that ratings decrease through each time bin. In order to confirm this we want to see the mean rating for each time bin:
 | time_bin   |   avg_recipe_rating |
@@ -120,13 +140,28 @@ Above we see a faint trend that ratings decrease through each time bin. In order
 
 There's not a significant trend and the ```'60-120 min'``` bin goes against this trend as it's mean average recipe rating is greater than the bin before it. This made us curious about the distribution of recipe counts per time bin so we visualized that below:
 
-<iframe src="fig_7.html" width="100%" height="500px"></iframe>
+<iframe 
+    src="graphs/fig_7.html" 
+    width="800"
+    height="600"
+    frameborder="0"
+></iframe>
 
 Next we want to see the relationship between filtered cooking time (times <= 250) and average recipe rating:
-<iframe src="fig_5.html" width="100%" height="500px"></iframe>
+<iframe 
+    src="graphs/fig_5.html" 
+    width="800"
+    height="600"
+    frameborder="0"
+></iframe>
 
 We also want to see the relationship between log cooking time and average recipe rating:
-<iframe src="fig_6.html" width="100%" height="500px"></iframe>
+<iframe 
+    src="graphs/fig_6.html" 
+    width="800"
+    height="600"
+    frameborder="0"
+></iframe>
 
 Finally, we want to see what the mean average recipe rating looks like for quick and non-quick recipes:
 |   is_quick |    mean |   count |
