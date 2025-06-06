@@ -1,7 +1,8 @@
-# Cooking Time vs. Recipe Ratings. A Data-Driven analysis on Recipes
+# Quick and Delicious: Does Cooking Time Predict Recipe Rating?
 
-Final Project for the University of California, San Diego DSC80 Course
-by: Jeremy Cheng and Cedric Jeng
+Final Project for the UCSD's DSC80 Course
+
+Authors: Jeremy Cheng and Cedric Jeng
 
 ## Overview
 
@@ -9,12 +10,12 @@ Our data science project explores the relationship between the cooking time and 
 
 ## Introduction
 
-As college students living on campus, finding good food is much harder than it seems. Dining hall meals often fall short, and in the fast-paced quarter system, it can be difficult to find the time to cook. Thus, we find ourself drawn to recipes that are both quick and satisfying. This is why we were excited to explore this dataset: to determine whether shorter cooking times are linked to higher recipe ratings. To do so, we are analyzing two datasets that contain recipes and their ratings from on [food.com](https://www.food.com/) since 2008. Through this project, we hope to better understand or even answer the question: Is cooking time a strong predictor of user satisfaction, as measured by average recipe ratings?
+As college students living on campus, finding good food is more challenging than it seems. Dining hall meals often fall short, and the fast-paced quarter system leaves little time for cooking, especially during exam-filled weeks. This makes us gravitate toward recipes that are both quick and satisfying. Motivated by this, we set out to explore whether shorter cooking times are linked to higher recipe ratings. Using two datasets from [food.com](https://www.food.com/), one containing over 80,000 recipes and the other with user reviews submitted since 2008, we aim to answer the question: Is cooking time a strong predictor of user satisfaction, as measured by average recipe ratings?
 
 `'recipe'`, the first dataset, consist of 83782 rows (83782 unique recipes) and 12 columns, each representing information on the recipe:
 
 | **Column**         |                                                                                                                                              **Description** |
-| :--------------- | -----------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| :----------------- | -----------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | `'name'`           |                                                                                                                                                  recipe name |
 | `'id'`             |                                                                                                                                                    recipe ID |
 | `'minutes'`        |                                                                                                                                       minutes to cook recipe |
@@ -38,53 +39,48 @@ As college students living on campus, finding good food is much harder than it s
 | `'rating'`    |          rating of recipe |
 | `'review'`    |        text of the review |
 
---- 
+---
 
 ## Data Cleaning and Exploratory Data Analysis
 
 ### Data Cleaning
 
-In order to properly analyze the dataset, we did the following to clean our data:
+In order to properly analyze and prepare the datasets, we performed the following steps:
 
-1. Replace ratings of 0 in interactions with np.nan.
+1. Replaced ratings of 0 in the interactions dataset with np.nan.
 
-   - Ratings on food.com range from 1 to 5, so a rating of 0 does not represent a valid user review, which likely means the user didn’t rate the recipe.
-   - Replacing them with `np.nan` ensures they are excluded from the average calculation, which is how pandas handles missing values by default.
+   - Ratings on food.com range from 1 to 5, so a rating of 0 is invalid and likely indicates that the user didn't rate the recipe.
+   - Replacing them with `np.nan` ensures they are excluded from the average rating calculation, which is how pandas handles missing values by default.
 
-2. Compute average rating per recipe of the interactions dataset.
+2. Computed the average rating per recipe of the interactions dataset.
 
-   - We're primarily interested in how well each recipe is rated, not the full list of individual interactions.
-   - Grouping by `'recipe_id'` and computing the mean gives us a single, representative value for each recipe's overall rating.
+   - We are primarily interested in how well each recipe is rated, rather than individual user reviews.
+   - Grouping by `'recipe_id'` and computing the mean yields a single, representative value for each recipe's overall rating.
 
-3. Map the average rating per recipe to raw_recipes
-
-   - Instead of fully merging the datasets, we extract only the information we care about (the average rating) and add it directly to the main recipes dataset.
-   - This keeps all unique recipes in `raw_recipes` and avoids duplicate rows that would result from merging on one-to-many relationships.
-   - If a recipe has no ratings in the interactions dataset (never rated or all ratings were 0), its mapped average will be `np.nan`, reflecting the absence of rating data.
-
-4. Add new column `'high_rating'` to the dataframe.
-   - `'high_rating'` is a binary column indicating whether a recipe has an average rating of 4.5 or higher. Recipes that meet this threshold are assigned a 1, while all others receive a 0. This separates the dataset into two groups: highly rated recipes and the rest. It allows for easy comparison of characteristics (e.g., time, ingredients, sugar content) between top-rated recipes and lower-rated ones, helping identify what makes a recipe particularly successful.
-
+3. Mapped the average rating per recipe to the raw_recipes dataset
+   - Instead of fully merging the datasets, we extracted only the information we care about (the average rating) and added it directly to the main recipes dataset.
+   - This preserved all unique recipes in `raw_recipes` and avoided duplicate rows that would result from merging on one-to-many relationships.
+   - Recipes with no valid ratings (either never rated or all ratings were 0) had their average rating set to `np.nan`
 
 #### Result
+
 These are the columns of our cleaned dataframe:
 
-| **Column**            | **Type**|
-| :-------------------- | ------: |
-| `'name'`              |  object |
-| `'id'`                |   int64 |
-| `'minutes'`           |   int64 |
-| `'contributor_id'`    |   int64 |
-| `'submitted'`         |  object |
-| `'tags'`              |  object |
-| `'nutrition'`         |  object |
-| `'n_steps'`           |   int64 |
-| `'steps'`             |  object |
-| `'description'`       |  object |
-| `'ingredients'`       |  object |
-| `'n_ingredients'`     |   int64 |
-| `'avg_recipe_rating'` | float64 |
-| `'high_rating'`       |   int64 |
+| **Column**            | **Type** |
+| :-------------------- | -------: |
+| `'name'`              |   object |
+| `'id'`                |    int64 |
+| `'minutes'`           |    int64 |
+| `'contributor_id'`    |    int64 |
+| `'submitted'`         |   object |
+| `'tags'`              |   object |
+| `'nutrition'`         |   object |
+| `'n_steps'`           |    int64 |
+| `'steps'`             |   object |
+| `'description'`       |   object |
+| `'ingredients'`       |   object |
+| `'n_ingredients'`     |    int64 |
+| `'avg_recipe_rating'` |  float64 |
 
 And below is the head of our dataframe with only columns needed for our project:
 
@@ -103,6 +99,7 @@ Our cleaned dataframe consist of 83782 rows × 9 columns.
 ### Exploratory Data Analysis
 
 #### Univariate Analysis
+
 We first did univariate analysis to see the distribution of our single variables.
 
 Below is the distribution of cook times in minutes less than or equal to 250 minutes. Initally we plotted our entire minutes column but because of extreme outliers, it showed one large column. Thus we filtered it to `'<= 250'` minutes to see our trends better:
@@ -116,6 +113,7 @@ Below is the distribution of cook times in minutes less than or equal to 250 min
 As we can see in the histogram above, our cooking times show a right-skewed distribution. This means most of our filtered recipes hover around the lower end of our scale of 0 to 250 minutes.
 
 Furthermore, the right-skeweness of the distribution suggests that logarithmic transformation of our minutes column could help reduce skewness and improve symmetry for better analysis:
+
 <iframe 
     src="graphs/fig_2.html" 
     width="900"
@@ -125,6 +123,7 @@ Furthermore, the right-skeweness of the distribution suggests that logarithmic t
 The resulting distribution is much more symmetric, with the center now around 3.75 on the log scale (corresponds to approximately 43 minutes on the original scale). This transformation reduces the influence of extreme cooking times and helps make the data more suitable for statistical modeling by improving normality and stabilizing variance across observations.
 
 Next we wanted to look at the distribution of average recipe ratings:
+
 <iframe 
     src="graphs/fig_3.html" 
     width="900"
@@ -183,7 +182,6 @@ We also want to see the relationship between log cooking time and average recipe
 ></iframe>
 Taking the log of cooking time helps to compress the wide range of values and highlight patterns that may be harder to see on a linear scale. Similar to the linear version, most recipes tend to have high ratings (4 or 5 stars), regardless of cooking time. Overall, even with log transformation, there still doesn’t appear to be a strong or consistent relationship between cooking time and average recipe rating. Most recipes, regardless of how long they take to cook, are still rated quite highly.
 
-
 Finally, we want to see what the mean average recipe rating looks like for quick (1) and non-quick (0) recipes:
 
 | is_quick |    mean | count |
@@ -197,7 +195,7 @@ The table above shows the mean average rating and the number of recipes in each 
 
 ### NMAR Analysis
 
-We believe that the missingness in the `'description'` column is Not Missing At Random (NMAR). This is because the likelihood of a description being provided likely depends on unobserved factors, such as the contributor’s effort, writing motivation, or belief in the recipe’s uniqueness or quality. 
+We believe that the missingness in the `'description'` column is Not Missing At Random (NMAR). This is because the likelihood of a description being provided likely depends on unobserved factors, such as the contributor’s effort, writing motivation, or belief in the recipe’s uniqueness or quality.
 
 To convert this from NMAR to Missing At Random (MAR), we would need access to additional variables, such as contributor behavior or user profile information (e.g., how many recipes the user has uploaded, average engagement with their recipes, or whether they are verified contributors). These variables might explain the missingness in `'description'`, helping us determine if the absence of a description is related to something observable rather than unobservable.
 
@@ -306,7 +304,6 @@ Mean difference: 0.035
 
 Since the p-value we obtained (0.001) is lower than the significance level of 0.05, we reject the null hypothesis. This suggests that cooking time and recipe rating are not independent. While the observed effect is statistically significant, the actual difference in mean ratings is quite small, which indicates a weak relationship.
 
-
 ## Framing a Prediction Problem
 
 We aim to predict whether a user will enjoy a recipe based on its features through binary classification. This is because our response variable is a binary column called `'enjoy'`, which is 1 if a recipe’s average rating is greater than or equal to the median rating across all recipes, and 0 otherwise. This choice allows us to frame the prediction task as identifying “liked” vs. “not liked” recipes using user-provided ratings. This makes the task a binary classification problem with the model’s job being to assign a new recipe to one of two categories: liked or not liked. We use only information that would be available at the time of recipe publication to simulate a real-world use case such as suggesting new recipes to users.
@@ -317,56 +314,63 @@ We aim to predict whether a user will enjoy a recipe based on its features throu
 Our goal was to build a predictive model that classifies whether a user is likely to enjoy a recipe. We defined the target variable `'enjoy'` as a binary outcome: recipes with an average rating above or equal to the median rating were labeled as 1 (enjoyed), and those below the median were labeled as 0 (not enjoyed).
 
 We trained a logistic regression model using these three numerical features:
-* `'minutes'`: the cooking time of the recipe
-* `'n_steps'`: the number of cooking steps in the recipe
-* `'n_ingredients'`: the number of ingredients used in the recipe
+
+- `'minutes'`: the cooking time of the recipe
+- `'n_steps'`: the number of cooking steps in the recipe
+- `'n_ingredients'`: the number of ingredients used in the recipe
 
 All three of these features are quantitative. There were no ordinal or nominal (categorical) variables in this baseline model, so no encodings such as one-hot or ordinal encoding were necessary.
 
 Before training the model, we standardized all numeric features using StandardScaler within a ColumnTransformer to ensure the model treats all features on the same scale. The full preprocessing and model training pipeline was implemented using scikit-learn’s Pipeline functionality.
 
 We evaluated the model using a stratified 80/20 train-test split to preserve the distribution of the target variable. The `'enjoy'` variable was slightly imbalanced, with approximately:
-**59% of samples labeled as enjoyed (1)** and **41% labeled as not enjoyed (0)**. The performance metrics on the test set were: 
-* **Accuracy: 0.589**
-* **F1 Score: 0.741**
+**59% of samples labeled as enjoyed (1)** and **41% labeled as not enjoyed (0)**. The performance metrics on the test set were:
+
+- **Accuracy: 0.589**
+- **F1 Score: 0.741**
 
 The model achieves an accuracy of approximately 58.9%, which is only slightly better than always predicting the majority class (enjoyed or 1). Meaning our baseline model isn’t adding much predictive value in terms of accuracy. However, our F1 Score of 0.741 indicates that the model is capturing patterns that allow it to distinguish the two classes. So while our accuracy is low, our high F1 suggest that the model is better at identifying minority class than accuracy alone indicates.
 
 ## Final Model
+
 ### Feature Engineering
+
 To improve our prediction of whether a recipe would be `'enjoyed'` (rated at or above the median), we engineered a set of features grounded in the data-generating process and domain logic:
 
-| **Feature**                         | **Description**                                                                                                                                             |
-|------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `protein_to_fat`, `sugar_to_calories` | Nutritional ratios capturing relative nutrient densities. Users may prefer recipes with high protein-to-fat ratios or lower sugar relative to calories.     |
-| `is_quick`                         | Indicates whether a recipe is quick to prepare. May influence user ratings due to convenience. Not used directly in the final model but informed feature design. |
-| `tag_` features                    | One-hot encoded tags like “easy”, “vegan”, or “holiday” provide semantic context about recipe type, complexity, or occasion—often aligned with user preferences. |
-| `n_ratings`, `rating_std`          | Aggregated rating metrics. `n_ratings` reflects popularity; `rating_std` captures variability. High count and low variability suggest reliability.         |
-| `encoded_contributor`             | Encodes the historical performance of contributors using Bayesian shrinkage. Contributors with strong track records are more likely to produce highly-rated recipes. |
-| `has_<ingredient>`                | Binary indicators for the top 10 most common ingredients (e.g., garlic, onion, butter). These capture taste preferences or user familiarity with ingredients.  |
-
+| **Feature**                           | **Description**                                                                                                                                                      |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `protein_to_fat`, `sugar_to_calories` | Nutritional ratios capturing relative nutrient densities. Users may prefer recipes with high protein-to-fat ratios or lower sugar relative to calories.              |
+| `is_quick`                            | Indicates whether a recipe is quick to prepare. May influence user ratings due to convenience. Not used directly in the final model but informed feature design.     |
+| `tag_` features                       | One-hot encoded tags like “easy”, “vegan”, or “holiday” provide semantic context about recipe type, complexity, or occasion—often aligned with user preferences.     |
+| `n_ratings`, `rating_std`             | Aggregated rating metrics. `n_ratings` reflects popularity; `rating_std` captures variability. High count and low variability suggest reliability.                   |
+| `encoded_contributor`                 | Encodes the historical performance of contributors using Bayesian shrinkage. Contributors with strong track records are more likely to produce highly-rated recipes. |
+| `has_<ingredient>`                    | Binary indicators for the top 10 most common ingredients (e.g., garlic, onion, butter). These capture taste preferences or user familiarity with ingredients.        |
 
 These features were selected to reflect meaningful patterns in how users might evaluate recipes, not based solely on model performance.
 
 ### Model and Hyperparameter Selection
+
 We chose a Random Forest Classifier as the final model due to its ability to capture nonlinear relationships, natural handling of categorical/binary variables, and built-in feature importance.
 
 We used a grid search with 3-fold cross-validation to tune the following hyperparameters:
-* `n_estimators`: Number of trees in the forest
-* `max_depth`: Maximum depth of each tree
-* `min_samples_leaf`: Minimum number of samples required to be at a leaf node
+
+- `n_estimators`: Number of trees in the forest
+- `max_depth`: Maximum depth of each tree
+- `min_samples_leaf`: Minimum number of samples required to be at a leaf node
 
 The best performing combination from our grid was selected based on the F1 score, as it balances precision and recall, which is appropriate for slightly imbalanced classes.
 
 ### Model Performance
 
 Compared to our baseline logistic regression model, which achieved:
-* **Accuracy: 0.589**
-* **F1 Score: 0.741**
+
+- **Accuracy: 0.589**
+- **F1 Score: 0.741**
 
 Our final Random Forest model achieved:
-* **Test Accuracy: 0.844**
-* **Test F1 Score: 0.875**
+
+- **Test Accuracy: 0.844**
+- **Test F1 Score: 0.875**
 
 This is a substantial improvement, suggesting that the engineered features and nonlinear modeling approach better captured the complexity of what makes a recipe enjoyable.
 
@@ -375,30 +379,36 @@ The performance boost of our final model validates the added value of our featur
 ## Fairness Analysis
 
 For this fairness test, we compared model performance across two groups:
-* Group X (Quick Recipes): Recipes with cooking time below the median (`is_quick == 1`)
-* Group Y (Not Quick Recipes): Recipes with cooking time above the median (`is_quick == 0`)
+
+- Group X (Quick Recipes): Recipes with cooking time below the median (`is_quick == 1`)
+- Group Y (Not Quick Recipes): Recipes with cooking time above the median (`is_quick == 0`)
 
 These groups reflect differences in user time constraints, and we want to ensure our model performs similarly across them.
 
 ### Evaluation Metric
+
 We used F1 Score as our evaluation metric because it balances precision and recall, which is appropriate given the class imbalance in the target variable.
 
 ### Hypotheses
+
 Null Hypothesis (H₀): The model is fair with respect to cooking time. Any difference in F1 scores between the two groups is due to random chance.
 
 Alternative Hypothesis (H₁): The model is unfair with respect to cooking time. The F1 score differs significantly between quick and not-quick recipes.
 
 ### Test Statistic
+
 We used the difference in F1 scores between the two groups as our test statistic:
 Test Statistic = F1<sub>quick</sub> − F1<sub>not quick</sub>
 
 ### Permutation Test
+
 We ran a permutation test with 1,000 iterations, randomly shuffling the `'is_quick'` labels and computing the difference in F1 scores each time. This generated a null distribution of F1 differences under the assumption of fairness.
 
 The observed difference in F1 score was:
-* F1_quick = 0.8788
-* F1_not_quick = 0.8701
-* Observed difference = 0.0087
+
+- F1_quick = 0.8788
+- F1_not_quick = 0.8701
+- Observed difference = 0.0087
 
 The resulting p-value was **0.236**, which is greater than our significance threshold of α = 0.05.
 
@@ -410,4 +420,5 @@ The resulting p-value was **0.236**, which is greater than our significance thre
 ></iframe>
 
 ### Conclusion
+
 The observed difference in F1 score between the two groups was not statistically significant (p_val > 0.05). Thus, we fail to reject the null hypothesis and conclude that our model does include evidence of unfairness with respect to cooking time.
