@@ -110,9 +110,9 @@ Below is the histogram of the filtered cooking times:
     height="600"
     frameborder="0"
 ></iframe>
-As we can see in the histogram above, our cooking times show a right-skewed distribution. This means most of our filtered recipes hover around the lower end of our scale of 0 to 250 minutes.
+As shown in the histogram above, the distribution of cooking times is heavily right-skewed. Most recipes fall within the lower end of the 0 to 250-minutes range, with only a small number of recipes requiring significantly longer cooking times.
 
-Furthermore, the right-skeweness of the distribution suggests that logarithmic transformation of our minutes column could help reduce skewness and improve symmetry for better analysis:
+Furthermore, the right-skewness of the distribution suggests that applying a logarithmic transformation to the minutes column could reduce skewness and improve symmetry, making the data more suitable for analysis.
 
 <iframe 
     src="graphs/fig_2.html" 
@@ -120,9 +120,10 @@ Furthermore, the right-skeweness of the distribution suggests that logarithmic t
     height="600"
     frameborder="0"
 ></iframe>
-The resulting distribution is much more symmetric, with the center now around 3.75 on the log scale (corresponds to approximately 43 minutes on the original scale). This transformation reduces the influence of extreme cooking times and helps make the data more suitable for statistical modeling by improving normality and stabilizing variance across observations.
 
-Next we wanted to look at the distribution of average recipe ratings:
+After applying the log transformation to the '`minutes`' column, the distribution becomes much more symmetric. The center of the distribution shifts to around 3.75 on the log scale, which corresponds to roughly 43 minutes on the original scale. This transformation removes the influence of extreme values, making the data more suitable for statistical modeling by improving normality and stabilizing variance across observations.
+
+Next we examined the distribution of average recipe ratings:
 
 <iframe 
     src="graphs/fig_3.html" 
@@ -130,7 +131,8 @@ Next we wanted to look at the distribution of average recipe ratings:
     height="600"
     frameborder="0"
 ></iframe>
-We can see that it's heavily skewed to the left with average ratings of 5 being by far the most common as it accounts for what looks like over 52,000 recipes. The next most frequent ratings are 4.0 and 4.5, with approximately 13,000 and 10,000 recipes respectively. Ratings below 4.0 are relatively rare, with fewer than 3,000 recipes for any given lower rating.This pattern indicates a strong positive bias in the dataset, which is common in online ratings systems where users are more likely to leave feedback only when they are especially satisfied.
+
+As shown in the histogram, the distribution is heavily left-skewed, with a concentration of recipes rated a perfect 5.0. Over 52,000 recipes recipes received this top rating, while the next most common ratings, 4.0 and 4.5, trail significantly, with around 13,000 and 10,000 recipes, respectively. Ratings below 4.0 are extremely rare, each appearing fewer than 3,000 times. This distribution reflects a strong positive bias, which is typical in online review platforms. Users are more likely to submit ratings when they've had a particularly positive experience, inflating ratings.
 
 #### Bivariate Analysis
 
