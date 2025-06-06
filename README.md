@@ -109,6 +109,7 @@ Below is the histogram of the filtered cooking times:
     width="900"
     height="600"
     frameborder="0"
+    style="display: block; margin-bottom: 0;"
 ></iframe>
 As shown in the histogram above, the distribution of cooking times is heavily right-skewed. Most recipes fall within the lower end of the 0 to 250-minutes range, with only a small number of recipes requiring significantly longer cooking times.
 
@@ -119,6 +120,7 @@ Furthermore, the right-skewness of the distribution suggests that applying a log
     width="900"
     height="600"
     frameborder="0"
+    style="display: block; margin-bottom: 0;"
 ></iframe>
 
 After applying the log transformation to the '`minutes`' column, the distribution becomes much more symmetric. The center of the distribution shifts to around 3.75 on the log scale, which corresponds to roughly 43 minutes on the original scale. This transformation removes the influence of extreme values, making the data more suitable for statistical modeling by improving normality and stabilizing variance across observations.
@@ -130,6 +132,7 @@ Next we examined the distribution of average recipe ratings:
     width="900"
     height="600"
     frameborder="0"
+    style="display: block; margin-bottom: 0;"
 ></iframe>
 
 As shown in the histogram, the distribution is heavily left-skewed, with a concentration of recipes rated a perfect 5.0. Over 52,000 recipes recipes received this top rating, while the next most common ratings, 4.0 and 4.5, trail significantly, with around 13,000 and 10,000 recipes, respectively. Ratings below 4.0 are extremely rare, each appearing fewer than 3,000 times. This distribution reflects a strong positive bias, which is typical in online review platforms. Users are more likely to submit ratings when they've had a particularly positive experience, inflating ratings.
