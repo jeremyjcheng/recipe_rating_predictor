@@ -38,6 +38,8 @@ As college students living on campus, finding good food is much harder than it s
 | `'rating'`    |          rating of recipe |
 | `'review'`    |        text of the review |
 
+--- 
+
 ## Data Cleaning and Exploratory Data Analysis
 
 ### Data Cleaning
@@ -63,8 +65,8 @@ In order to properly analyze the dataset, we did the following to clean our data
 4. Add new column `'high_rating'` to the dataframe.
    - `'high_rating'` is a binary column indicating whether a recipe has an average rating of 4.5 or higher. Recipes that meet this threshold are assigned a 1, while all others receive a 0. This separates the dataset into two groups: highly rated recipes and the rest. It allows for easy comparison of characteristics (e.g., time, ingredients, sugar content) between top-rated recipes and lower-rated ones, helping identify what makes a recipe particularly successful.
 
-#### Result
 
+#### Result
 These are the columns of our cleaned dataframe:
 
 | **Column**            | **Type**|
@@ -96,18 +98,19 @@ And below is the head of our dataframe with only columns needed for our project:
 
 Our cleaned dataframe consist of 83782 rows × 9 columns.
 
+---
+
 ### Exploratory Data Analysis
 
 #### Univariate Analysis
-
 We first did univariate analysis to see the distribution of our single variables.
 
 Below is the distribution of cook times in minutes less than or equal to 250 minutes. Initally we plotted our entire minutes column but because of extreme outliers, it showed one large column. Thus we filtered it to `'<= 250'` minutes to see our trends better:
 
 <iframe 
     src="graphs/fig_1.html" 
-    width="1400"
-    height="1200"
+    width="1800"
+    height="1600"
     frameborder="0"
 ></iframe>
 <br> As we can see in the histogram above, our cooking times show a right-skewed distribution. This means most of our filtered recipes hover around the lower end of our scale of 0 to 250 minutes.
@@ -115,8 +118,8 @@ Below is the distribution of cook times in minutes less than or equal to 250 min
 Furthermore, the right-skeweness of the distribution suggests that logarithmic transformation of our minutes column could help reduce skewness and improve symmetry for better analysis:
 <iframe 
     src="graphs/fig_2.html" 
-    width="1400"
-    height="1200"
+    width="1800"
+    height="1600"
     frameborder="0"
 ></iframe>
 <br>The resulting distribution is much more symmetric, with the center now around 3.75 on the log scale (corresponds to approximately 43 minutes on the original scale). This transformation reduces the influence of extreme cooking times and helps make the data more suitable for statistical modeling by improving normality and stabilizing variance across observations.
@@ -124,8 +127,8 @@ Furthermore, the right-skeweness of the distribution suggests that logarithmic t
 Next we wanted to look at the distribution of average recipe ratings:
 <iframe 
     src="graphs/fig_3.html" 
-    width="1400"
-    height="1200"
+    width="1800"
+    height="6400"
     frameborder="0"
 ></iframe>
 <br>We can see that it's heavily skewed to the left with average ratings of 5 being by far the most common as it accounts for what looks like over 52,000 recipes. The next most frequent ratings are 4.0 and 4.5, with approximately 13,000 and 10,000 recipes respectively. Ratings below 4.0 are relatively rare, with fewer than 3,000 recipes for any given lower rating.This pattern indicates a strong positive bias in the dataset, which is common in online ratings systems where users are more likely to leave feedback only when they are especially satisfied.
@@ -136,8 +139,8 @@ Here we want to examine cooking time split into bins against average recipe rati
 
 <iframe 
     src="graphs/fig_4.html" 
-    width="1400"
-    height="1200"
+    width="1800"
+    height="1600"
     frameborder="0"
 ></iframe>
 
@@ -155,8 +158,8 @@ There's not a significant trend and the `'60-120 min'` bin goes against this tre
 
 <iframe 
     src="graphs/fig_7.html" 
-    width="1400"
-    height="1200"
+    width="1800"
+    height="1600"
     frameborder="0"
 ></iframe>
 
@@ -164,8 +167,8 @@ Next we want to see the relationship between filtered cooking time (times <= 250
 
 <iframe 
     src="graphs/fig_5.html" 
-    width="1400"
-    height="1200"
+    width="1800"
+    height="1600"
     frameborder="0"
 ></iframe>
 <br>We see that a large concentration of recipes are 4 to 5 stars, with a even higher concentration around the lower end of the filtered cooking time scale. There doesn’t appear to be a strong or clear correlation between cooking time and average rating—recipes with short and long cooking times can receive both high and low ratings.
@@ -174,8 +177,8 @@ We also want to see the relationship between log cooking time and average recipe
 
 <iframe 
     src="graphs/fig_6.html" 
-    width="1400"
-    height="1200"
+    width="1800"
+    height="1600"
     frameborder="0"
 ></iframe>
 <br>Taking the log of cooking time helps to compress the wide range of values and highlight patterns that may be harder to see on a linear scale. Similar to the linear version, most recipes tend to have high ratings (4 or 5 stars), regardless of cooking time. Overall, even with log transformation, there still doesn’t appear to be a strong or consistent relationship between cooking time and average recipe rating. Most recipes, regardless of how long they take to cook, are still rated quite highly.
@@ -218,8 +221,8 @@ Conclusion: We fail to reject the null hypothesis. The missingness of 'descripti
 
 <iframe 
     src="graphs/fig_8.html" 
-    width="1400"
-    height="1200"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
@@ -238,8 +241,8 @@ Conclusion: We fail to reject the null hypothesis. The missingness of 'descripti
 
 <iframe 
     src="graphs/fig_9.html" 
-    width="1400"
-    height="1200"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
@@ -260,8 +263,8 @@ Conclusion: We reject the null hypothesis. The missingness of 'description' does
 
 <iframe 
     src="graphs/fig_11.html" 
-    width="1400"
-    height="1200"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
@@ -289,15 +292,15 @@ Mean difference: 0.035
 
 <iframe 
     src="graphs/fig_12.html" 
-    width="1400"
-    height="1200"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
 <iframe 
     src="graphs/fig_13.html" 
-    width="1400"
-    height="1200"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
@@ -401,8 +404,8 @@ The resulting p-value was **0.236**, which is greater than our significance thre
 
 <iframe 
     src="graphs/fig_14.html" 
-    width="1400"
-    height="1200"
+    width="1000"
+    height="800"
     frameborder="0"
 ></iframe>
 
