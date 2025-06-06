@@ -92,7 +92,7 @@ And below is the head of our dataframe with only columns needed for our project:
 |   3 | millionaire pound cake             | 286009 |     120 | ['time-to-make', 'course', 'cuisine', 'preparation', 'occasion', 'north-american', 'desserts', 'american', 'southern-united-states', 'dinner-party', 'holiday-event', 'cakes', 'dietary', 'christmas', 'thanksgiving', 'low-sodium', 'low-in-something', 'taste-mood', 'sweet', '4-hours-or-less'] | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0] |       7 |             7 |                 5 |
 |   4 | 2000 meatloaf                      | 475785 |      90 | ['time-to-make', 'course', 'main-ingredient', 'preparation', 'main-dish', 'potatoes', 'vegetables', '4-hours-or-less', 'meatloaf', 'simply-potatoes2']                                                                                                                                             | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0]    |      17 |            13 |                 5 |
 
-Our cleaned dataframe consist of 83782 rows × 9 columns.
+Our cleaned dataframe consist of 83782 rows × 8 columns.
 
 ---
 
@@ -100,9 +100,9 @@ Our cleaned dataframe consist of 83782 rows × 9 columns.
 
 #### Univariate Analysis
 
-We first did univariate analysis to see the distribution of our single variables.
+We began our univariate analysis by examining the distribution of cooking times. Initially, we plotted all values in teh minutes column, but extreme outliers distorted the visualiation, producing a single column for all values. To better observe the data, we filtered the data to include only recipes with cooking times of 250 minutes or less. We chose 250 minutes (just over 4 hours) as a reasonable upper limit because recipes beyond that length are not as common as shorter ones and typically not practical for everyday cooking.
 
-Below is the distribution of cook times in minutes less than or equal to 250 minutes. Initally we plotted our entire minutes column but because of extreme outliers, it showed one large column. Thus we filtered it to `'<= 250'` minutes to see our trends better:
+Below is the histogram of the filtered cooking times:
 
 <iframe 
     src="graphs/fig_1.html" 
