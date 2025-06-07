@@ -12,7 +12,7 @@ Our data science project explores the relationship between the cooking time and 
 
 As college students living on campus, finding good food is more challenging than it seems. Dining hall meals often fall short, and the fast-paced quarter system leaves little time for cooking, especially during exam-filled weeks. This makes us gravitate toward recipes that are both quick and satisfying. Motivated by this, we set out to explore whether shorter cooking times are linked to higher recipe ratings. Using two datasets from [food.com](https://www.food.com/), one containing over 80,000 recipes and the other with user reviews submitted since 2008, we aim to answer the question: Is cooking time a strong predictor of user satisfaction, as measured by average recipe ratings?
 
-`'recipe'`, the first dataset, consist of 83782 rows (83782 unique recipes) and 12 columns, each representing information on the recipe:
+`'recipe'`, the first dataset, consists of 83782 rows (83782 unique recipes) and 12 columns, each representing information on the recipe:
 
 | **Column**         |                                                                                                                                              **Description** |
 | :----------------- | -----------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -29,7 +29,7 @@ As college students living on campus, finding good food is more challenging than
 | `'ingredients'`    |                                                                                                                                           recipe ingredients |
 | `'n_ingredients'`  |                                                                                                                              number of ingredients in recipe |
 
-`'interactions'`, our second dataset, consist of 731927 rows (731927 unique reviews) and 5 columns, each representing information on the review:
+`'interactions'`, our second dataset, consists of 731927 rows (731927 unique reviews) and 5 columns, each representing information on the review:
 
 | **Column**    |           **Description** |
 | :------------ | ------------------------: |
@@ -92,7 +92,7 @@ And below is the head of our dataframe with only columns needed for our project:
 |   3 | millionaire pound cake             | 286009 |     120 | ['time-to-make', 'course', 'cuisine', 'preparation', 'occasion', 'north-american', 'desserts', 'american', 'southern-united-states', 'dinner-party', 'holiday-event', 'cakes', 'dietary', 'christmas', 'thanksgiving', 'low-sodium', 'low-in-something', 'taste-mood', 'sweet', '4-hours-or-less'] | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0] |       7 |             7 |                 5 |
 |   4 | 2000 meatloaf                      | 475785 |      90 | ['time-to-make', 'course', 'main-ingredient', 'preparation', 'main-dish', 'potatoes', 'vegetables', '4-hours-or-less', 'meatloaf', 'simply-potatoes2']                                                                                                                                             | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0]    |      17 |            13 |                 5 |
 
-Our cleaned dataframe consist of 83782 rows × 8 columns.
+Our cleaned dataframe consists of 83782 rows × 8 columns.
 
 ---
 
@@ -100,7 +100,7 @@ Our cleaned dataframe consist of 83782 rows × 8 columns.
 
 #### Univariate Analysis
 
-We began our univariate analysis by examining the distribution of cooking times. Initially, we plotted all values in teh minutes column, but extreme outliers distorted the visualiation, producing a single column for all values. To better observe the data, we filtered the data to include only recipes with cooking times of 250 minutes or less. We chose 250 minutes (just over 4 hours) as a reasonable upper limit because recipes beyond that length are not as common as shorter ones and typically not practical for everyday cooking.
+We began our univariate analysis by examining the distribution of cooking times. Initially, we plotted all values in the minutes column, but extreme outliers distorted the visualization, producing a single column for all values. To better observe the data, we filtered the data to include only recipes with cooking times of 250 minutes or less. We chose 250 minutes (just over 4 hours) as a reasonable upper limit because recipes beyond that length are not as common as shorter ones and typically not practical for everyday cooking.
 
 Below is the histogram of the filtered cooking times:
 
@@ -155,7 +155,7 @@ The boxplot above suggests a faint trend: recipes with shorter cooking times ten
 | 60-120 min |            4.6205 |
 | 120+ min   |           4.59511 |
 
-While there appears to be a slight downward trend in ratings as cooking time increases, it's not particularly strong, The `'60-120 min'` bin slightly breaks the pattern, with a higher mean rating than the `'30-60 min'` bin. To intvestigate further, we examined how many recipes fall into each cooking time bin:
+While there appears to be a slight downward trend in ratings as cooking time increases, it's not particularly strong, The `'60-120 min'` bin slightly breaks the pattern, with a higher mean rating than the `'30-60 min'` bin. To investigate further, we examined how many recipes fall into each cooking time bin:
 
 <iframe 
     src="graphs/fig_7.html" 
@@ -164,7 +164,7 @@ While there appears to be a slight downward trend in ratings as cooking time inc
     frameborder="0"
 ></iframe>
 
-The bar chart above shows that the `'30-60 min'` bin contains the highest number of recipes, followed by the`'10-30 min'` bin. In contrast, both very short (0-10 minutes) and very long (120+ min) recipes are less common. This uneven distribution could partially explain the irregularity in the average ratings, as bins with fewer recipes may have more volatile averages due to smaller sample sizes.
+The bar chart above shows that the `'30-60 min'` bin contains the highest number of recipes, followed by the `'10-30 min'` bin. In contrast, both very short (0-10 minutes) and very long (120+ min) recipes are less common. This uneven distribution could partially explain the irregularity in the average ratings, as bins with fewer recipes may have more volatile averages due to smaller sample sizes.
 
 Next, we examined the relationship between filtered cooking time (<= 250 minutes) and average recipe rating:
 
@@ -177,7 +177,7 @@ Next, we examined the relationship between filtered cooking time (<= 250 minutes
 
 The scatterplot above shows a strong concentration of recipes with ratings between 4 and 5 stars, particularly clustered at the lower end of the cooking time axis. However, there is no clear or strong correlation between cooking time and average rating; recipes with both short and long cook times span the full range of ratings. This suggests that cooking time alone is not a strong predictor of how users rate a recipe. While quicker recipes are slightly more frequent and often highly rated, long recipes can also receive top scores, and short ones can be rated poorly.
 
-We also examined the relationship between log-transformed cookingt ime and average recipe rating:
+We also examined the relationship between log-transformed cooking time and average recipe rating:
 
 <iframe 
     src="graphs/fig_6.html" 
@@ -186,7 +186,7 @@ We also examined the relationship between log-transformed cookingt ime and avera
     frameborder="0"
 ></iframe>
 
-Taking the logarithm of cooking times compresses the wide range of values and helps highlight patters that may be harder to identify on a linear scale. Similar to the original scatter plot, most recipes cluster between 4 and 5 stars, regardless of cooking time. Overall, even after log transformation, there is still no strong or consistent relationship between cooking time and average recipe rating. Most recipes, whether quick or time-intensive, are rated highly.
+Taking the logarithm of cooking times compresses the wide range of values and helps highlight patterns that may be harder to identify on a linear scale. Similar to the original scatter plot, most recipes cluster between 4 and 5 stars, regardless of cooking time. Overall, even after log transformation, there is still no strong or consistent relationship between cooking time and average recipe rating. Most recipes, whether quick or time-intensive, are rated highly.
 
 Finally, we explored how average ratings differ between quick (1) and non-quick (0) recipes:
 
@@ -201,9 +201,9 @@ The table above shows the mean average rating and the number of recipes in each 
 
 ### NMAR Analysis
 
-We believe that the missingness in teh `description` column is Not Missing At Random (NMAR). This is because whether a recipe includes a description likely depends on the unobserved factors such as the effort or motivation of the person submitting it, or their confidence in the recipe's uniqueness or quality.
+We believe that the missingness in the `description` column is Not Missing At Random (NMAR). This is because whether a recipe includes a description likely depends on the unobserved factors such as the effort or motivation of the person submitting it, or their confidence in the recipe's uniqueness or quality.
 
-To convert this from NMAR to Missing At Random (MAR), we would need access to additional variables related ot contributor behavior or user profile information(e.g. how many recipes a user has submitted, how often others engage with their content, or whether they are verified contributors). These variables could help explain the missingness in `description` and allow us to determine whether the absence of a description is linked to something observable rather than unobservable.
+To convert this from NMAR to Missing At Random (MAR), we would need access to additional variables related to contributor behavior or user profile information(e.g. how many recipes a user has submitted, how often others engage with their content, or whether they are verified contributors). These variables could help explain the missingness in `description` and allow us to determine whether the absence of a description is linked to something observable rather than unobservable.
 
 ### Missingness Dependency
 
@@ -230,7 +230,7 @@ Conclusion: We fail to reject the null hypothesis. The missingness of `descripti
     frameborder="0"
 ></iframe>
 
-The smoothed density plot above supports this conclusion, showing little difference between the distributions of cooking time for recipes with and without a decsription. Both curves follow a similar right-skewed shape, indicating that cooking duration likely plays no role in whether a description is included.
+The smoothed density plot above supports this conclusion, showing little difference between the distributions of cooking time for recipes with and without a description. Both curves follow a similar right-skewed shape, indicating that cooking duration likely plays no role in whether a description is included.
 
 ### Average Rating and Description
 
@@ -253,7 +253,7 @@ Conclusion: We fail to reject the null hypothesis. The missingness of 'descripti
     frameborder="0"
 ></iframe>
 
-The smoothed density plot suports this conclusion: the distributions of average ratings for recipes with and without descriptions are quite similar. Although the blue curve (not missing) shows a slightly sharper peak near 5.0, the overall shape of both distributions indicates that the presence or absence of a description is not strongly associated with how highly a recipe is not strongly associated with how highly a recipe is rated.
+The smoothed density plot supports this conclusion: the distributions of average ratings for recipes with and without descriptions are quite similar. Although the blue curve (not missing) shows a slightly sharper peak near 5.0, the overall shape of both distributions indicates that the presence or absence of a description is not strongly associated with how highly a recipe is rated.
 
 ### Number of Ingredients and Description
 
@@ -350,7 +350,7 @@ We evaluated the model using a stratified 80/20 train-test split to preserve the
 
 The model achieves an accuracy of approximately 58.9%, which is only slightly better than always predicting the majority class (enjoyed or 1). Meaning our baseline model isn’t adding much predictive value in terms of accuracy. However, our F1 Score of 0.741 indicates that the model is capturing patterns that allow it to distinguish the two classes. So while our accuracy is low, our high F1 suggest that the model is better at identifying minority class than accuracy alone indicates.
 
-The model achieces an accuracy of about 58.9%, which is only slightly better than always predicting the majority class (which is 59%). However, the F1 score of 0.741 and perfect recall (1.0) suggest that the model successfully identifies all actually enjoyed recipes in the test set. This high recall indicates that the model never misses a positive case, but the relatively low precision and accuracy shows that it also makes many false positive predictions: labeling recipes as "enjoyed" when they actually weren't. Overall, the baseline model is heavily skewed toward predicting the majority class but still captures useful trends and signals from the features.
+The model achieves an accuracy of about 58.9%, which is only slightly better than always predicting the majority class (which is 59%). However, the F1 score of 0.741 and perfect recall (1.0) suggest that the model successfully identifies all actually enjoyed recipes in the test set. This high recall indicates that the model never misses a positive case, but the relatively low precision and accuracy shows that it also makes many false positive predictions: labeling recipes as "enjoyed" when they actually weren't. Overall, the baseline model is heavily skewed toward predicting the majority class but still captures useful trends and signals from the features.
 
 ## Final Model
 
@@ -454,4 +454,4 @@ To improve performance, we engineered a range of features informed by domain kno
 
 We also ran a fairness analysis to evaluate whether our model treated quick and non-quick recipes equally. The small, statistically insignificant difference in F1 scores between the two groups indicated that the model performed consistently regardless of quickness (cooking time).
 
-Ultimately, our findings show that enojyment is a mulitfacaeted concept. By combining different features, we were able to model the process behind rating a recipe. This project not only strengthened our understanding of recipe data, but also showed us the power of feature engineering and evlutaion in building models.
+Ultimately, our findings show that enjoyment is a multifaceted concept. By combining different features, we were able to model the process behind rating a recipe. This project not only strengthened our understanding of recipe data, but also showed us the power of feature engineering and evaluation in building models.
