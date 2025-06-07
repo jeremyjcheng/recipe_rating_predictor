@@ -257,19 +257,19 @@ The smoothed density plot suports this conclusion: the distributions of average 
 
 ### Number of Ingredients and Description
 
-Null Hypothesis: The missingness of '`description`' does not depend on the number of ingredients in the recipe.
+Null Hypothesis: The missingness of `'description'` does not depend on the number of ingredients in the recipe.
 
-Alternative Hypothesis: The missingness of '`description`' does depend on the number of ingredients in the recipe.
+Alternative Hypothesis: The missingness of `'description'` does depend on the number of ingredients in the recipe.
 
 Test Statistic: The absolute difference in the proportion of missing descriptions between recipes with fewer ingredients and those with more.
 
 Significance Level: 0.05
 
-We created a binary column 'few_ingredients' to indicate whether a recipe has fewer than or equal to the median number of ingredients.
+We created a binary column `'few_ingredients'` to indicate whether a recipe has fewer than or equal to the median number of ingredients.
 
 The permutation test produced a p-value of 0.011, which is less than the significance level.
 
-Conclusion: We reject the null hypothesis. The missingness of 'description' does depend on the number of ingredients in the recipe. Recipes with fewer ingredients are more likely to have missing descriptions, possibly because they are simpler and don’t require much explanation.
+Conclusion: We reject the null hypothesis. The missingness of `'description'` does depend on the number of ingredients in the recipe. Recipes with fewer ingredients are more likely to have missing descriptions, possibly because they are simpler and don’t require much explanation.
 
 <iframe 
     src="graphs/fig_11.html" 
@@ -320,8 +320,11 @@ Since the p-value we obtained (0.001) is lower than the significance level of 0.
 
 ## Framing a Prediction Problem
 
-We aim to predict whether a user will enjoy a recipe based on its features through binary classification. This is because our response variable is a binary column called `'enjoy'`, which is 1 if a recipe’s average rating is greater than or equal to the median rating across all recipes, and 0 otherwise. This choice allows us to frame the prediction task as identifying “liked” vs. “not liked” recipes using user-provided ratings. This makes the task a binary classification problem with the model’s job being to assign a new recipe to one of two categories: liked or not liked. We use only information that would be available at the time of recipe publication to simulate a real-world use case such as suggesting new recipes to users.
-<br>I need to explain metrics and justify
+We aim to predict whether a user will enjoy a recipe based on its features through binary classification. This is because our response variable is a binary column called `'enjoy'`, which is 1 if a recipe’s average rating is greater than or equal to the median rating across all recipes, and 0 otherwise. This choice allows us to frame the prediction task as identifying “liked” vs. “not liked” recipes using user-provided ratings. This makes the task a binary classification problem with the model’s job being to assign a new recipe to one of two categories: liked or not liked. 
+
+To evaluate our model’s performance, we used two metrics: accuracy and F1 score. Accuracy measures the overall proportion of correct predictions and is useful as a baseline when the classes are relatively balanced. However, since the two classes are not perfectly balanced (e.g., around 59% of the recipes are labeled as "enjoyed"), accuracy alone can be misleading. For this reason, we also report the F1 score, which is the harmonic mean of precision and recall. F1 is especially useful when we care about both false positives and false negatives, which is relevant in our case: incorrectly recommending a disliked recipe or missing a good one both harm user experience. Therefore, F1 provides a more informative view of performance under potential class imbalance and reflects the model’s ability to correctly identify enjoyable recipes without overpredicting.
+
+We made sure that all input features are based only on information that would be known before or at the time of prediction (when a recipe is first published). This includes metadata like cooking time, ingredients, nutritional information, contributor history, and recipe tags, but excludes any user interaction data such as average rating or number of ratings for new, unseen recipes. This ensures our model can be realistically deployed to make predictions about new recipes as soon as they’re posted, before any user feedback is available.
 
 ## Baseline Model
 
