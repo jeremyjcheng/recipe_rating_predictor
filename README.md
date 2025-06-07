@@ -47,20 +47,22 @@ As college students living on campus, finding good food is more challenging than
 
 In order to properly analyze and prepare the datasets, we performed the following steps:
 
-1. Replaced ratings of 0 in the interactions dataset with np.nan.
+1. Left merge the recipe and interaction datasets.
+   - This ensured that every recipe from raw_recipes was preserved, even if it didn’t have any user interactions. The result was a single dataframe (`merged`) containing both recipe information and associated user ratings where available.
 
-   - Ratings on food.com range from 1 to 5, so a rating of 0 is invalid and likely indicates that the user didn't rate the recipe.
-   - Replacing them with `np.nan` ensures they are excluded from the average rating calculation, which is how pandas handles missing values by default.
-
-2. Computed the average rating per recipe of the interactions dataset.
-
-   - We are primarily interested in how well each recipe is rated, rather than individual user reviews.
-   - Grouping by `'recipe_id'` and computing the mean yields a single, representative value for each recipe's overall rating.
-
-3. Mapped the average rating per recipe to the raw_recipes dataset
-   - Instead of fully merging the datasets, we extracted only the information we care about (the average rating) and added it directly to the main recipes dataset.
-   - This preserved all unique recipes in `raw_recipes` and avoided duplicate rows that would result from merging on one-to-many relationships.
-   - Recipes with no valid ratings (either never rated or all ratings were 0) had their average rating set to `np.nan`
+2. Replaced invalid ratings with `NaN`.
+   - We replaced all ratings of 0 in the rating column with `np.nan`.
+   - Food.com ratings range from 1 to 5, so a rating of 0 is not valid and likely indicates the user didn’t submit a rating.
+   - Replacing these with `NaN` ensures that they are excluded from average rating calculations.
+  
+3. Computed the average rating per recipe.
+   - We grouped the merged dataset by id (`'recipe ID'`) and calculated the mean rating for each recipe, ignoring any `NaN` values.
+   - This gave us a single average rating for each recipe that reflects its overall reception by users.
+   
+4. Mapped the average rating to the recipes dataset.
+   - We created a new copy of the original raw_recipes dataframe and added a new column called `'avg_recipe_rating'`, which contains the average ratings we just computed.
+   - This was done using the `.map()` function to match each recipe's ID with its corresponding average rating.
+   - Recipes with no valid ratings (no interactions or only invalid ratings) received a value of `NaN` in this column, indicating missing data. 
 
 #### Result
 
