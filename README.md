@@ -48,7 +48,8 @@ As college students living on campus, finding good food is more challenging than
 In order to properly analyze and prepare the datasets, we performed the following steps:
 
 1. Left merge the recipe and interaction datasets.
-   - This ensured that every recipe from raw_recipes was preserved, even if it didn’t have any user interactions. The result was a single dataframe (`merged`) containing both recipe information and associated user ratings where available.
+   - This ensured that every recipe from raw_recipes was preserved, even if it didn’t have any user interactions.
+   - The result was a single dataframe (`merged`) containing both recipe information and associated user ratings where available.
 
 2. Replaced invalid ratings with `NaN`.
    - We replaced all ratings of 0 in the rating column with `np.nan`.
