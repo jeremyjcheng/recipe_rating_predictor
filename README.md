@@ -201,9 +201,9 @@ The table above shows the mean average rating and the number of recipes in each 
 
 ### NMAR Analysis
 
-We believe that the missingness in the `'description'` column is Not Missing At Random (NMAR). This is because the likelihood of a description being provided likely depends on unobserved factors, such as the contributor’s effort, writing motivation, or belief in the recipe’s uniqueness or quality.
+We believe that the missingness in teh '`description`' column is Not Missing At Random (NMAR). This is because whether a recipe includes a description likely depends on the unobserved factors such as the effort or motivation of the person submitting it, or their confidence in the recipe's uniqueness or quality.
 
-To convert this from NMAR to Missing At Random (MAR), we would need access to additional variables, such as contributor behavior or user profile information (e.g., how many recipes the user has uploaded, average engagement with their recipes, or whether they are verified contributors). These variables might explain the missingness in `'description'`, helping us determine if the absence of a description is related to something observable rather than unobservable.
+To convert this from NMAR to Missing At Random (MAR), we would need access to additional variables related ot contributor behavior or user profile information(e.g. how many recipes a user has submitted, how often others engage with their content, or whether they are verified contributors). These variables could help explain the missingness in `'description'` and allow us to determine whether the absence of a description is linked to something observable rather than unobservable.
 
 ### Missingness Dependency
 
@@ -211,9 +211,9 @@ To explore whether the missingness of `'description'` might be dependent on othe
 
 ### Minutes and Description
 
-Null Hypothesis: The missingness of 'description' does not depend on the cooking time of the recipe ('minutes').
+Null Hypothesis: The missingness of '`description`' does not depend on the cooking time of the recipe ('minutes').
 
-Alternative Hypothesis: The missingness of 'description' does depend on the cooking time of the recipe.
+Alternative Hypothesis: The missingness of '`description`' does depend on the cooking time of the recipe.
 
 Test Statistic: The absolute difference in the mean number of minutes between recipes with and without a description.
 
@@ -221,7 +221,7 @@ Significance Level: 0.05
 
 After running a permutation test with 1000 shuffles, we obtained a p-value of 1.0, which is much greater than 0.05.
 
-Conclusion: We fail to reject the null hypothesis. The missingness of 'description' does not depend on the cooking time in minutes.
+Conclusion: We fail to reject the null hypothesis. The missingness of '`description`' does not appear to depend on cooking time.
 
 <iframe 
     src="graphs/fig_8.html" 
@@ -230,17 +230,20 @@ Conclusion: We fail to reject the null hypothesis. The missingness of 'descripti
     frameborder="0"
 ></iframe>
 
+The smoothed density plot above supports this conclusion, showing little difference between the distributions of cooking time for recipes with and without a decsription. Both curves follow a similar right-skewed shape, indicating that cooking duration likely plays no role in whether a description is included.
+
 ### Average Rating and Description
 
-Null Hypothesis: The missingness of 'description' does not depend on the average rating of a recipe ('avg_recipe_rating').
+Null Hypothesis: The missingness of '`description`' does not depend on the average rating of a recipe ('avg_recipe_rating').
 
-Alternative Hypothesis: The missingness of 'description' does depend on the average rating of a recipe.
+Alternative Hypothesis: The missingness of '`description`' does depend on the average rating of a recipe.
 
 Test Statistic: The absolute difference in the mean average rating between recipes with and without a description.
 
 Significance Level: 0.05
 
 From the permutation test, we obtained a p-value of 0.45, which is greater than the significance level.
+
 Conclusion: We fail to reject the null hypothesis. The missingness of 'description' does not depend on a recipe's average rating.
 
 <iframe 
@@ -250,11 +253,13 @@ Conclusion: We fail to reject the null hypothesis. The missingness of 'descripti
     frameborder="0"
 ></iframe>
 
+The smoothed density plot suports this conclusion: the distributions of average ratings for recipes with and without descriptions are quite similar. Although the blue curve (not missing) shows a slightly sharper peak near 5.0, the overall shape of both distributions indicates that the presence or absence of a description is not strongly associated with how highly a recipe is not strongly associated with how highly a recipe is rated.
+
 ### Number of Ingredients and Description
 
-Null Hypothesis: The missingness of 'description' does not depend on the number of ingredients in the recipe.
+Null Hypothesis: The missingness of '`description`' does not depend on the number of ingredients in the recipe.
 
-Alternative Hypothesis: The missingness of 'description' does depend on the number of ingredients in the recipe.
+Alternative Hypothesis: The missingness of '`description`' does depend on the number of ingredients in the recipe.
 
 Test Statistic: The absolute difference in the proportion of missing descriptions between recipes with fewer ingredients and those with more.
 
@@ -263,6 +268,7 @@ Significance Level: 0.05
 We created a binary column 'few_ingredients' to indicate whether a recipe has fewer than or equal to the median number of ingredients.
 
 The permutation test produced a p-value of 0.011, which is less than the significance level.
+
 Conclusion: We reject the null hypothesis. The missingness of 'description' does depend on the number of ingredients in the recipe. Recipes with fewer ingredients are more likely to have missing descriptions, possibly because they are simpler and don’t require much explanation.
 
 <iframe 
@@ -271,6 +277,8 @@ Conclusion: We reject the null hypothesis. The missingness of 'description' does
     height="600"
     frameborder="0"
 ></iframe>
+
+The bar chart supports this conclusion, showing a higher proportion of missing descriptions among recipes with fewer ingredients (those below or equal to the median). The difference, though small, is statistically significant, indicating that ingredient count is an observable factor influencing description presence.
 
 ## Hypothesis Testing
 
