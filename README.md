@@ -320,7 +320,7 @@ Since the p-value we obtained (0.001) is lower than the significance level of 0.
 
 ## Framing a Prediction Problem
 
-We aim to predict whether a user will enjoy a recipe based on its features through binary classification. This is because our response variable is a binary column called `'enjoy'`, which is 1 if a recipe’s average rating is greater than or equal to the median rating across all recipes, and 0 otherwise. This choice allows us to frame the prediction task as identifying “liked” vs. “not liked” recipes using user-provided ratings. This makes the task a binary classification problem with the model’s job being to assign a new recipe to one of two categories: liked or not liked. 
+We aim to predict whether a user will enjoy a recipe based on its features through binary classification. This is because our response variable is a binary column called `'enjoy'`, which is 1 if a recipe’s average rating is greater than or equal to the median rating across all recipes, and 0 otherwise. This choice allows us to frame the prediction task as identifying “liked” vs. “not liked” recipes using user-provided ratings. This makes the task a binary classification problem with the model’s job being to assign a new recipe to one of two categories: liked or not liked.
 
 To evaluate our model’s performance, we used two metrics: accuracy and F1 score. Accuracy measures the overall proportion of correct predictions and is useful as a baseline when the classes are relatively balanced. However, since the two classes are not perfectly balanced (e.g., around 59% of the recipes are labeled as "enjoyed"), accuracy alone can be misleading. For this reason, we also report the F1 score, which is the harmonic mean of precision and recall. F1 is especially useful when we care about both false positives and false negatives, which is relevant in our case: incorrectly recommending a disliked recipe or missing a good one both harm user experience. Therefore, F1 provides a more informative view of performance under potential class imbalance and reflects the model’s ability to correctly identify enjoyable recipes without overpredicting.
 
@@ -444,6 +444,14 @@ The resulting p-value was **0.236**, which is greater than our significance thre
     frameborder="0"
 ></iframe>
 
+The observed difference in F1 score between the two groups was not statistically significant (p_val > 0.05). Thus, we fail to reject the null hypothesis and conclude that our model does include evidence of unfairness with respect to cooking time.
+
 ### Conclusion
 
-The observed difference in F1 score between the two groups was not statistically significant (p_val > 0.05). Thus, we fail to reject the null hypothesis and conclude that our model does include evidence of unfairness with respect to cooking time.
+In this project, we set out to answer a simple but meaningful question: what makes a recipe enjoyable? By modeling whether a recipe's average rating would fall above or below the median, we framed the task as a binary classification problem. Our baseline regression model, using only three basic numerical features, achieved an F1 score of 0.741. While this provided a solid starting point, it lacked the complexity needed to fully capture the underlying trends and nuances of user preferences.
+
+To improve performance, we engineered a range of features informed by domain knowledge: nutritional ratios, user behavior signals, tag encodings, and ingredient-based indicators. Using a Random Forest Classifier with tuned hyperparameters, our final model achieved a significantly higher F1 score of 0.87 and strong precision and recall. These results suggest that user enjoyment is influenced not just by simplicity or cook time, but also by patterns in ingredient choices, tag context, and user familiarity with recipes.
+
+We also ran a fairness analysis to evaluate whether our model treated quick and non-quick recipes equally. The small, statistically insignificant difference in F1 scores between the two groups indicated that the model performed consistently regardless of quickness (cooking time).
+
+Ultimately, our findings show that enojyment is a mulitfacaeted concept. By combining different features, we were able to model the process behind rating a recipe. This project not only strengthened our understanding of recipe data, but also showed us the power of feature engineering and evlutaion in building models.
