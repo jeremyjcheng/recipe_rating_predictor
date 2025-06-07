@@ -201,13 +201,13 @@ The table above shows the mean average rating and the number of recipes in each 
 
 ### NMAR Analysis
 
-We believe that the missingness in teh '`description`' column is Not Missing At Random (NMAR). This is because whether a recipe includes a description likely depends on the unobserved factors such as the effort or motivation of the person submitting it, or their confidence in the recipe's uniqueness or quality.
+We believe that the missingness in teh `description` column is Not Missing At Random (NMAR). This is because whether a recipe includes a description likely depends on the unobserved factors such as the effort or motivation of the person submitting it, or their confidence in the recipe's uniqueness or quality.
 
-To convert this from NMAR to Missing At Random (MAR), we would need access to additional variables related ot contributor behavior or user profile information(e.g. how many recipes a user has submitted, how often others engage with their content, or whether they are verified contributors). These variables could help explain the missingness in `'description'` and allow us to determine whether the absence of a description is linked to something observable rather than unobservable.
+To convert this from NMAR to Missing At Random (MAR), we would need access to additional variables related ot contributor behavior or user profile information(e.g. how many recipes a user has submitted, how often others engage with their content, or whether they are verified contributors). These variables could help explain the missingness in `description` and allow us to determine whether the absence of a description is linked to something observable rather than unobservable.
 
 ### Missingness Dependency
 
-To explore whether the missingness of `'description'` might be dependent on other observable columns, we conducted permutation tests with the following variables: `'minutes'`, `'avg_recipe_rating'`, and `'few_ingredients'`.
+To explore whether the missingness of `description` might be dependent on other observable columns, we conducted permutation tests with the following variables: `'minutes'`, `'avg_recipe_rating'`, and `'few_ingredients'`.
 
 ### Minutes and Description
 
@@ -221,7 +221,7 @@ Significance Level: 0.05
 
 After running a permutation test with 1000 shuffles, we obtained a p-value of 1.0, which is much greater than 0.05.
 
-Conclusion: We fail to reject the null hypothesis. The missingness of '`description`' does not appear to depend on cooking time.
+Conclusion: We fail to reject the null hypothesis. The missingness of `description` does not appear to depend on cooking time.
 
 <iframe 
     src="graphs/fig_8.html" 
@@ -345,8 +345,12 @@ We evaluated the model using a stratified 80/20 train-test split to preserve the
 
 - **Accuracy: 0.589**
 - **F1 Score: 0.741**
+- **Precision: 0.589**
+- **Recall: 1.0**
 
 The model achieves an accuracy of approximately 58.9%, which is only slightly better than always predicting the majority class (enjoyed or 1). Meaning our baseline model isn’t adding much predictive value in terms of accuracy. However, our F1 Score of 0.741 indicates that the model is capturing patterns that allow it to distinguish the two classes. So while our accuracy is low, our high F1 suggest that the model is better at identifying minority class than accuracy alone indicates.
+
+The model achieces an accuracy of about 58.9%, which is only slightly better than always predicting the majority class (which is 59%). However, the F1 score of 0.741 and perfect recall (1.0) suggest that the model successfully identifies all actually enjoyed recipes in the test set. This high recall indicates that the model never misses a positive case, but the relatively low precision and accuracy shows that it also makes many false positive predictions: labeling recipes as "enjoyed" when they actually weren't. Overall, the baseline model is heavily skewed toward predicting the majority class but still captures useful trends and signals from the features.
 
 ## Final Model
 
@@ -379,17 +383,21 @@ The best performing combination from our grid was selected based on the F1 score
 
 ### Model Performance
 
-Compared to our baseline logistic regression model, which achieved:
+Our final model significantly outperformed the baseline logistic regression model across all key metrics:
 
 - **Accuracy: 0.589**
 - **F1 Score: 0.741**
+- **Precision: 0.589**
+- **Recall: 1.0**
 
 Our final Random Forest model achieved:
 
-- **Test Accuracy: 0.844**
-- **Test F1 Score: 0.875**
+- **Accuracy: 0.844**
+- **F1 Score: 0.875**
+- **Precision: 0.832**
+- **Recall: 0.922**
 
-This is a substantial improvement, suggesting that the engineered features and nonlinear modeling approach better captured the complexity of what makes a recipe enjoyable.
+These improvements show that the Random Forest model is far better at identifying both enjoyed and not-enjoyed recipes. The high recall means the model successfully detects most recipes users enjoy, while the increased precision means it avoids over-predicting enjoyment. The strong F1 score confirms a healthy balance between the two.
 
 The performance boost of our final model validates the added value of our feature engineering. By incorporating metadata (tags), user behavior (ratings), and content-based features (ingredients and nutrition), we successfully built a model that closely mimics the nuanced decision process behind user ratings.
 
