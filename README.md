@@ -109,7 +109,6 @@ Below is the histogram of the filtered cooking times:
     width="900"
     height="600"
     frameborder="0"
-    style="display: block; margin-bottom: 0;"
 ></iframe>
 As shown in the histogram above, the distribution of cooking times is heavily right-skewed. Most recipes fall within the lower end of the 0 to 250-minutes range, with only a small number of recipes requiring significantly longer cooking times.
 
@@ -120,7 +119,6 @@ Furthermore, the right-skewness of the distribution suggests that applying a log
     width="900"
     height="600"
     frameborder="0"
-    style="display: block; margin-bottom: 0;"
 ></iframe>
 
 After applying the log transformation to the '`minutes`' column, the distribution becomes much more symmetric. The center of the distribution shifts to around 3.75 on the log scale, which corresponds to roughly 43 minutes on the original scale. This transformation removes the influence of extreme values, making the data more suitable for statistical modeling by improving normality and stabilizing variance across observations.
@@ -132,14 +130,13 @@ Next we examined the distribution of average recipe ratings:
     width="900"
     height="600"
     frameborder="0"
-    style="display: block; margin-bottom: 0;"
 ></iframe>
 
 As shown in the histogram, the distribution is heavily left-skewed, with a concentration of recipes rated a perfect 5.0. Over 52,000 recipes recipes received this top rating, while the next most common ratings, 4.0 and 4.5, trail significantly, with around 13,000 and 10,000 recipes, respectively. Ratings below 4.0 are extremely rare, each appearing fewer than 3,000 times. This distribution reflects a strong positive bias, which is typical in online review platforms. Users are more likely to submit ratings when they've had a particularly positive experience, inflating ratings.
 
 #### Bivariate Analysis
 
-Here we want to examine cooking time split into bins against average recipe rating:
+Here, we examine how average recipe ratings vary across different cooking time bins:
 
 <iframe 
     src="graphs/fig_4.html" 
@@ -148,7 +145,7 @@ Here we want to examine cooking time split into bins against average recipe rati
     frameborder="0"
 ></iframe>
 
-Above we see a faint trend that ratings decrease through each time bin. In order to confirm this we want to see the mean rating for each time bin:
+The boxplot above suggests a faint trend: recipes with shorter cooking times tend to have slightly higher ratings. To confirm this trend, we computed the mean average rating for each time bin:
 
 | time_bin   | avg_recipe_rating |
 | :--------- | ----------------: |
@@ -158,7 +155,7 @@ Above we see a faint trend that ratings decrease through each time bin. In order
 | 60-120 min |            4.6205 |
 | 120+ min   |           4.59511 |
 
-There's not a significant trend and the `'60-120 min'` bin goes against this trend as it's mean average recipe rating is greater than the bin before it. This made us curious about the distribution of recipe counts per time bin so we visualized that below:
+While there appears to be a slight downward trend in ratings as cooking time increases, it's not particularly strong, The `'60-120 min'` bin slightly breaks the pattern, with a higher mean rating than the `'30-60 min'` bin. To intvestigate further, we examined how many recipes fall into each cooking time bin:
 
 <iframe 
     src="graphs/fig_7.html" 
@@ -167,7 +164,9 @@ There's not a significant trend and the `'60-120 min'` bin goes against this tre
     frameborder="0"
 ></iframe>
 
-Next we want to see the relationship between filtered cooking time (times <= 250) and average recipe rating:
+The bar chart above shows that the `'30-60 min'` bin contains the highest number of recipes, followed by the`'10-30 min'` bin. In contrast, both very short (0-10 minutes) and very long (120+ min) recipes are less common. This uneven distribution could partially explain the irregularity in the average ratings, as bins with fewer recipes may have more volatile averages due to smaller sample sizes.
+
+Next, we examined the relationship between filtered cooking time (<= 250 minutes) and average recipe rating:
 
 <iframe 
     src="graphs/fig_5.html" 
@@ -175,9 +174,10 @@ Next we want to see the relationship between filtered cooking time (times <= 250
     height="600"
     frameborder="0"
 ></iframe>
-We see that a large concentration of recipes are 4 to 5 stars, with a even higher concentration around the lower end of the filtered cooking time scale. There doesn’t appear to be a strong or clear correlation between cooking time and average rating—recipes with short and long cooking times can receive both high and low ratings.
 
-We also want to see the relationship between log cooking time and average recipe rating:
+The scatterplot above shows a strong concentration of recipes with ratings between 4 and 5 stars, particularly clustered at the lower end of the cooking time axis. However, there is no clear or strong correlation between cooking time and average rating; recipes with both short and long cook times span the full range of ratings. This suggests that cooking time alone is not a strong predictor of how users rate a recipe. While quicker recipes are slightly more frequent and often highly rated, long recipes can also receive top scores, and short ones can be rated poorly.
+
+We also examined the relationship between log-transformed cookingt ime and average recipe rating:
 
 <iframe 
     src="graphs/fig_6.html" 
@@ -185,16 +185,17 @@ We also want to see the relationship between log cooking time and average recipe
     height="600"
     frameborder="0"
 ></iframe>
-Taking the log of cooking time helps to compress the wide range of values and highlight patterns that may be harder to see on a linear scale. Similar to the linear version, most recipes tend to have high ratings (4 or 5 stars), regardless of cooking time. Overall, even with log transformation, there still doesn’t appear to be a strong or consistent relationship between cooking time and average recipe rating. Most recipes, regardless of how long they take to cook, are still rated quite highly.
 
-Finally, we want to see what the mean average recipe rating looks like for quick (1) and non-quick (0) recipes:
+Taking the logarithm of cooking times compresses the wide range of values and helps highlight patters that may be harder to identify on a linear scale. Similar to the original scatter plot, most recipes cluster between 4 and 5 stars, regardless of cooking time. Overall, even after log transformation, there is still no strong or consistent relationship between cooking time and average recipe rating. Most recipes, whether quick or time-intensive, are rated highly.
+
+Finally, we explored how average ratings differ between quick (1) and non-quick (0) recipes:
 
 | is_quick |    mean | count |
 | -------: | ------: | ----: |
 |        0 | 4.60937 | 44108 |
 |        1 | 4.64439 | 37065 |
 
-The table above shows the mean average rating and the number of recipes in each category. Quick recipes have a slightly higher average rating of 4.64 compared to 4.61 for non-quick recipes. Despite the small difference, both types of recipes tend to receive high ratings overall. The dataset includes a substantial number of both quick (37,065) and non-quick (44,108) recipes, so the comparison is reasonably balanced. This suggests that quicker recipes may be slightly more favored by users, though the difference in mean ratings is relatively small.
+The table above shows the mean average rating and the number of recipes in each category. Quick recipes have a slightly higher average (4.64) compared to non-quick recipes (4.61). Despite this small difference, both groups tend to receive high ratings overall. The dataset contains a substantial number of both quick (37,065) and non-quick (44,108) recipes, making the comparison reasonably balanced. This suggests that quicker recipes may be slightly more favored by users, though the difference in average ratings is relatively minor.
 
 ## Assessment of Missingness
 
